@@ -169,10 +169,6 @@ class Schedules(models.Model):
     id_lessons_time = models.ForeignKey('LessonsTime', verbose_name='Номер пары', on_delete=models.PROTECT, default=1)
     id_week_day = models.ForeignKey('WeekDays', verbose_name='День недели', on_delete=models.PROTECT, default=1)
 
-    def __str__(self):
-        return self.id_group.name_group, '/', self.id_subject.name_subject, '/', self.id_week_day.name_day, '/', str(
-            self.id_lessons_time.number_lesson)
-
     class Meta:
         verbose_name = 'Расписание'
         verbose_name_plural = 'Расписание'

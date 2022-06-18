@@ -41,7 +41,6 @@ class ViewNews(LoginRequiredMixin, DetailView):
     template_name = 'ScheduleSystem/news_detail.html'
     form = AttendanceForm
 
-
     # Handle POST GTTP requests
     def post(self, request, *args, **kwargs):
         form = self.form(request.POST)
