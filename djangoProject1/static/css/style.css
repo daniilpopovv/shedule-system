@@ -1,0 +1,48 @@
+.errorlist {
+    color: red;
+}
+
+nav.navbar {
+    background-color: #FFFFFF;
+}
+
+.navbar a:first-child {
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.navbar .navbar-collapse li {
+    display: block;
+    width: 170px;
+    height: 45px;
+    left: 398.48px;
+    top: 35px;
+
+    background: #BEA2EB;
+    box-shadow: 0px 6px 20px 1px rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+}
+
+.navbar .navbar-nav .nav-item a {
+    font-family: Montserrat, sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    position: center;
+    text-align: center;
+    text-transform: capitalize;
+    color: #FFFFFF;
+}
+
+.navbar .navbar-text a {
+    font-family: Montserrat, sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #000000;
+    display: block;
+    text-decoration: none;
+}
+
+.attendance-disappear {
+    display: none;
+}
