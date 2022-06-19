@@ -1,3 +1,4 @@
+{% if user.is_staff == 0 %}
 <div class="list-group">
     {% for item in schedule_today %}
         <a aria-current="true" href="{{ item.get_absolute_url }}" class="list-group-item list-group-item-action">
@@ -5,3 +6,4 @@
         </a>
     {% endfor %}
 </div>
+{% endif %}
