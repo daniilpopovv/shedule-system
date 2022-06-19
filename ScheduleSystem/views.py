@@ -48,6 +48,10 @@ def user_login(request):
             return redirect('home')
     else:
         form = UserLoginForm()
+
+    if request.user.is_authenticated:
+        return redirect('home')
+
     return render(request, 'ScheduleSystem/login.html', {"form": form})
 
 
