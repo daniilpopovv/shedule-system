@@ -13,7 +13,7 @@ from .models import *
 def index(request):
     context = {
         'ScheduleSystem': ScheduleSystem,
-        'title': 'Список новостей',
+        'title': 'Ваше расписание',
     }
     return render(request, template_name='ScheduleSystem/index.html', context=context)
 
