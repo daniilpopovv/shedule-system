@@ -4,7 +4,7 @@ from django.db import models
 from django.urls import reverse
 
 
-class Students(models.Model):
+class Students(models.Model): # g
     user = models.OneToOneField(User, verbose_name='Логин студента', on_delete=models.CASCADE)
     name_student = models.CharField(verbose_name='ФИО студента', max_length=50)
     id_course = models.ForeignKey('Courses', verbose_name='Номер курса', on_delete=models.PROTECT)
