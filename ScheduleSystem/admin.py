@@ -97,3 +97,4 @@ class SchedulesAdmin(admin.ModelAdmin):
     list_display = ('id_group', 'id_subject', 'id_lessons_time', 'id_week_day',)
     list_display_links = ('id_subject',)
     list_filter = ('id_group', 'id_subject__name_subject', 'id_lessons_time__time_lesson', 'id_week_day',)
+    ordering = ('id_lessons_time__number_lesson',)
