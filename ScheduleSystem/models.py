@@ -4,15 +4,15 @@ from django.db import models
 from django.urls import reverse
 
 
-class Students(models.Model): # g
+class Students(models.Model):
     user = models.OneToOneField(User, verbose_name='Логин студента', on_delete=models.CASCADE)
     name_student = models.CharField(verbose_name='ФИО студента', max_length=50)
-    id_course = models.ForeignKey('Courses', verbose_name='Номер курса', on_delete=models.PROTECT)
-    id_department = models.ForeignKey('Departments', verbose_name='Кафедра', on_delete=models.PROTECT)
-    id_group = models.ForeignKey('Groups', verbose_name='Группа', on_delete=models.PROTECT)
-    id_educational_form = models.ForeignKey('EducationalForms', verbose_name='Форма обучения', on_delete=models.PROTECT)
+    id_course = models.ForeignKey('Courses', verbose_name='Номер курса', on_delete=models.PROTECT, null=True)
+    id_department = models.ForeignKey('Departments', verbose_name='Кафедра', on_delete=models.PROTECT,null=True)
+    id_group = models.ForeignKey('Groups', verbose_name='Группа', on_delete=models.PROTECT, null=True)
+    id_educational_form = models.ForeignKey('EducationalForms', verbose_name='Форма обучения', on_delete=models.PROTECT, null=True)
 
-    def __str__(self): # ff
+    def __str__(self):
         return self.name_student
 
     class Meta:
@@ -176,3 +176,24 @@ class Schedules(models.Model):
         verbose_name = 'Расписание'
         verbose_name_plural = 'Расписание'
         ordering = ['-id']
+
+
+class News(models.Model):
+    title = models.CharField(max_length=150, verbose_name='Наименование')
+    content = models.TextField(blank=True, verbose_name='Контент')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
+    views = models.IntegerField(default=0)
+
+    def get_absolute_url(self):
+        return reverse('view_news', kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
+        ordering = ['-created_at']
+

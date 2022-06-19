@@ -6,6 +6,9 @@ urlpatterns = [
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
     path('', index, name='home'),
+    path('news/', HomeNews.as_view(), name='news'),
+    path('news/<int:pk>', ViewNews.as_view(), name='view_news'),
+
     path('ScheduleSystem/<int:pk>/', ViewLessons.as_view(), name='view_lessons'),
     # path('', HomeNews.as_view(), name='home'),
     # path('category/<int:category_id>/',get_category, name='category'),

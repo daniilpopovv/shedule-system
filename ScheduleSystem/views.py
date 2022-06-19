@@ -1,9 +1,10 @@
 import datetime
+from django.views.generic import ListView, DetailView, CreateView
 
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.views.generic import DetailView
+
 
 import ScheduleSystem
 from .forms import UserLoginForm, AttendanceForm
@@ -16,6 +17,27 @@ def index(request):
         'title': 'Ваше расписание',
     }
     return render(request, template_name='ScheduleSystem/index.html', context=context)
+
+
+class HomeNews(ListView):
+    model = News
+    template_name = 'ScheduleSystem/home_news_list.html'
+    context_object_name = 'news'
+    paginate_by = 2
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Страница новости'
+        return context
+
+
+    def get_queryset(self):
+        return News.objects.filter(is_published=True)
+
+
+class ViewNews(DetailView):
+    model = News
+    context_object_name = 'news_item'
 
 
 def user_login(request):

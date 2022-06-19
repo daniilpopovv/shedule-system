@@ -19,6 +19,13 @@ class DepartmentsAdmin(admin.ModelAdmin):
     search_fields = ('name_department',)
 
 
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'content', 'created_at', 'updated_at')
+    list_display_links = ('title',)
+    search_fields = ('title',)
+
+
 @admin.register(Courses)
 class CoursesAdmin(admin.ModelAdmin):
     list_display = ('number_course',)

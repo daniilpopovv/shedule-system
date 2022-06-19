@@ -33,7 +33,8 @@ def show_categories(context):
         # проверка зашел ли именно студент, для корректного отображения расписания
         if request.user.is_staff == 1:
             namegroup = 'ВЫ АДМИН'
-            schedule_today = 'ВЫ АДМИН'
+            schedule_today = Schedules.objects.filter(id_week_day__name_day=weekdayname).order_by(
+                'id_lessons_time__number_lesson')
         else:
             namegroup = request.user.students.id_group
             schedule_today = Schedules.objects.filter(id_week_day__name_day=weekdayname, id_group=namegroup).order_by(
@@ -42,5 +43,4 @@ def show_categories(context):
         schedule_today = ''
         namegroup = ''
 
-    print(schedule_today)
     return {"schedule_today": schedule_today, 'namegroup': namegroup}
