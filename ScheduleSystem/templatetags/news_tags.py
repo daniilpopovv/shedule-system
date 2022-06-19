@@ -5,8 +5,12 @@ from ScheduleSystem.models import Schedules
 register = template.Library()
 
 
-@register.inclusion_tag('ScheduleSystem/list_categories.html')
-def show_categories():
+@register.inclusion_tag('ScheduleSystem/list_categories.html', takes_context=True)
+def show_categories(context):
+    # получение request через context
+    request = context['request']
+
+    # получение текущего дня недели для фильтрации расписания
     weekdaynow = datetime.datetime.today().isoweekday()
     weekdayname = 'Неизвестно'
     if weekdaynow == 1:
@@ -24,6 +28,19 @@ def show_categories():
     elif weekdaynow == 7:
         weekdayname = 'Воскресенье'
 
-    schedule_today = Schedules.objects.filter(id_week_day__name_day=weekdayname).order_by(
-        'id_lessons_time__number_lesson')
-    return {"schedule_today": schedule_today}
+    # проверка авторизован ли пользователь
+    if request.user.is_authenticated:
+        # проверка зашел ли именно студент, для корректного отображения расписания
+        if request.user.is_staff == 1:
+            namegroup = 'ВЫ АДМИН'
+            schedule_today = Schedules.objects.filter(id_week_day__name_day=weekdayname).order_by(
+                'id_lessons_time__number_lesson')
+        else:
+            namegroup = request.user.students.id_group
+            schedule_today = Schedules.objects.filter(id_week_day__name_day=weekdayname, id_group=namegroup).order_by(
+                'id_lessons_time__number_lesson')
+    else:
+        schedule_today = ''
+        namegroup = ''
+
+    return {"schedule_today": schedule_today, 'namegroup': namegroup}
