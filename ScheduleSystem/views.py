@@ -35,9 +35,9 @@ def user_logout(request):
     return redirect('login')
 
 
-class ViewNews(LoginRequiredMixin, DetailView):
-    model = Attendance
-    context_object_name = 'attendance_item'
+class ViewLessons(LoginRequiredMixin, DetailView):
+    model = Schedules
+    context_object_name = 'schedule_item'
     template_name = 'ScheduleSystem/news_detail.html'
     form = AttendanceForm
 
@@ -45,7 +45,10 @@ class ViewNews(LoginRequiredMixin, DetailView):
     def post(self, request, *args, **kwargs):
         form = self.form(request.POST)
         primary_key = self.kwargs.get('pk')
-        attendance = Attendance.objects.get(id_attendance=primary_key)
+        schedule = Schedules.objects.get(id=primary_key)
+        attendance = Attendance(date_attendance=datetime.datetime.today(), id_lesson=schedule.id_lessons_time,
+                                attendance=False,
+                                id_student_id=request.user.students.id, id_subject=schedule.id_subject)
 
         if form.is_valid():
             print(form.cleaned_data)
@@ -57,14 +60,29 @@ class ViewNews(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         # получение объекта авторизованного пользователя
-        auth_student = self.request.user
+        auth_user = self.request.user
 
         # создание формы
         form = self.form()
 
         # получение контекста и pk для работы с БД
-        context = super(ViewNews, self).get_context_data(**kwargs)  # returns a dictionary of context
+        context = super(ViewLessons, self).get_context_data(**kwargs)  # returns a dictionary of context
         primary_key = self.kwargs.get('pk')
+
+        # получение экзмепляра модели по pk отображаемого предмета
+        schedule = Schedules.objects.get(id=primary_key)
+
+        # значения по умолчанию для проверки
+        canattend = 1
+
+        try:
+            attendance = Attendance.objects.get(date_attendance=datetime.datetime.today(),
+                                                id_lesson=schedule.id_lessons_time,
+                                                id_student=auth_user.students.id,
+                                                id_subject=schedule.id_subject).attendance
+        except Attendance.DoesNotExist:
+            attendance = 0
+            comment = None
 
         # получение текущего времени
         time_now = datetime.datetime.now()
@@ -72,51 +90,31 @@ class ViewNews(LoginRequiredMixin, DetailView):
         m_now = int(time_now.minute)
         now = h_now * 60 + m_now
 
-        # значения по умолчанию для проверки
-        canattend = 0
-        stud_or_not = 0
-
-        # временная проверка для вывода предметов для конкретного пользователя
-        if auth_student.is_superuser == 1:
-            stud_or_not = 1
-
-        # получение данных из моделей по pk отображаемого предмета
-        attendance = Attendance.objects.get(id_attendance=primary_key)
-        studentik = attendance.id_student_id
-        students = Students.objects.get(id=studentik)
-        lesson_id = attendance.id_lesson_id
-        lesson = LessonsTime.objects.get(id_lesson=lesson_id)
-        sub_id = attendance.id_subject_id
-        subject = Subjects.objects.get(id_subject=sub_id)
-        teacher_id = subject.id_teacher_id
-        teacher = Teachers.objects.get(id_teacher=teacher_id)
-
         # проверка времени и возможности отметиться
-        if lesson.number_lesson == 1:
+        if schedule.id_lessons_time.number_lesson == 1:
             start = 510
             end = 605
             if start < now < end:
                 canattend = 1
-        elif lesson.number_lesson == 2:
+        elif schedule.id_lessons_time.number_lesson == 2:
             start = 615
             end = 710
             if start < now < end:
                 canattend = 1
-        elif lesson.number_lesson == 3:
+        elif schedule.id_lessons_time.number_lesson == 3:
             start = 740
             end = 835
             if start < now < end:
                 canattend = 1
-        elif lesson.number_lesson == 4:
+        elif schedule.id_lessons_time.number_lesson == 4:
             start = 840
             end = 935
             if start < now < end:
                 canattend = 1
 
         # передача объектов в контексте
-        new_context_objects = {'students': students, 'lesson': lesson, 'subject': subject,
-                               'teacher': teacher, 'attendance': attendance, 'form': form,
-                               'canattend': canattend, 'stud': stud_or_not}
+        new_context_objects = {'schedule': schedule, 'form': form, 'attendance': attendance,
+                               'canattend': canattend}
         context.update(new_context_objects)
         return context
 
