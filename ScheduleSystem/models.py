@@ -169,6 +169,9 @@ class Schedules(models.Model):
     id_lessons_time = models.ForeignKey('LessonsTime', verbose_name='Номер пары', on_delete=models.PROTECT, default=1)
     id_week_day = models.ForeignKey('WeekDays', verbose_name='День недели', on_delete=models.PROTECT, default=1)
 
+    def get_absolute_url(self):
+        return reverse('view_lessons', kwargs={"pk": self.pk})
+
     class Meta:
         verbose_name = 'Расписание'
         verbose_name_plural = 'Расписание'
