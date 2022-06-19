@@ -44,6 +44,15 @@ nav.navbar {
     text-decoration: none;
 }
 
+.navbar a:last-child {
+    font-family: Montserrat, sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    position: center;
+    text-align: center;
+    color: gray;
+}
+
 .attendance-disappear {
     display: none;
 }
