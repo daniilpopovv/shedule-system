@@ -99,7 +99,7 @@ class LessonsTime(models.Model):
 
 
 class Attendance(models.Model):
-    date_attendance = models.DateField(verbose_name='Дата посещаемости?')
+    date_attendance = models.DateField(verbose_name='Дата посещаемости')
     id_lesson = models.ForeignKey('LessonsTime', on_delete=models.PROTECT, default=1)
     attendance = models.BooleanField(verbose_name='Присутствие', default=False)
     id_student = models.ForeignKey('Students', on_delete=models.PROTECT, default=1)
@@ -185,7 +185,6 @@ class News(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
-    views = models.IntegerField(default=0)
 
     def get_absolute_url(self):
         return reverse('view_news', kwargs={"pk": self.pk})
