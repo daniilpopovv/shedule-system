@@ -95,6 +95,7 @@ class ViewLessons(LoginRequiredMixin, DetailView):
 
         # значения по умолчанию для проверки
         canattend = 1
+        subject_started = 0
 
         try:
             attendance = Attendance.objects.get(date_attendance=datetime.datetime.today(),
@@ -115,25 +116,33 @@ class ViewLessons(LoginRequiredMixin, DetailView):
             start = 510
             end = 605
             if start < now < end:
-                canattend = 1
+                subject_started = 1
+            if now > end:
+                canattend = 0
         elif schedule.id_lessons_time.number_lesson == 2:
             start = 615
             end = 710
             if start < now < end:
-                canattend = 1
+                subject_started = 1
+            if now > end:
+                canattend = 0
         elif schedule.id_lessons_time.number_lesson == 3:
             start = 740
             end = 835
             if start < now < end:
-                canattend = 1
+                subject_started = 1
+            if now > end:
+                canattend = 0
         elif schedule.id_lessons_time.number_lesson == 4:
             start = 840
             end = 935
             if start < now < end:
-                canattend = 1
+                subject_started = 1
+            if now > end:
+                canattend = 0
 
         # передача объектов в контексте
         new_context_objects = {'schedule': schedule, 'form': form, 'attendance': attendance,
-                               'canattend': canattend}
+                               'canattend': canattend, 'subject_started': subject_started}
         context.update(new_context_objects)
         return context

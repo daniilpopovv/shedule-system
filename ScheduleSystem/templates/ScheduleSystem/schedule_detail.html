@@ -24,13 +24,15 @@
                 <button class="btn btn-sm btn-success attend-true" name="something">Вы отметились <i
                         class="fa-solid fa-check"></i>
                 </button>
-            {% elif canattend %}
+            {% elif canattend and subject_started %}
                 <form method="post" id="myForm">
                     {% csrf_token %}
                     {{ form }}
                     <button type="submit" class="btn btn-sm btn-outline-success attend-wait" name="something">Я на паре
                     </button>
                 </form>
+            {% elif canattend %}
+                <button class="btn btn-sm btn-outline-warning" name="something">Занятие пока не началось</button>
             {% else %}
                 <button class="btn btn-sm btn-danger attend-false" name="something">Вас не было на занятии
                 </button>
