@@ -1,10 +1,9 @@
 import datetime
-from django.views.generic import ListView, DetailView
 
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-
+from django.views.generic import ListView, DetailView
 
 import ScheduleSystem
 from .forms import UserLoginForm, AttendanceForm
@@ -21,7 +20,7 @@ def index(request):
 
 class HomeNews(ListView):
     model = News
-    template_name = 'ScheduleSystem/home_news_list.html'
+    template_name = 'ScheduleSystem/news_list.html'
     context_object_name = 'news'
     paginate_by = 2
 
@@ -60,7 +59,7 @@ def user_logout(request):
 class ViewLessons(LoginRequiredMixin, DetailView):
     model = Schedules
     context_object_name = 'schedule_item'
-    template_name = 'ScheduleSystem/news_detail.html'
+    template_name = 'ScheduleSystem/schedule_detail.html'
     form = AttendanceForm
 
     # Handle POST GTTP requests
@@ -138,53 +137,3 @@ class ViewLessons(LoginRequiredMixin, DetailView):
                                'canattend': canattend}
         context.update(new_context_objects)
         return context
-
-# context['students'] = Students.objects.get(id_student=studentik)
-# class NewsByCategory(MyMixin, ListView): # ОТОБРАЖЕНИЕ НУЖНЫХ ПРЕДМЕТОВ ДЛЯ КОНКРЕТНОГО СТУДЕНТА
-#     model = News
-#     template_name = 'ScheduleSystem/home_news_list.html'
-#     context_object_name = 'ScheduleSystem'
-#     allow_empty = False
-#     paginate_by = 2
-#
-#
-#     def get_queryset(self):
-#         return News.objects.filter(category_id=self.kwargs['category_id'],
-#         is_published=True).select_related('category')
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = Category.objects.get(pk=self.kwargs['category_id'])
-#         return context
-
-
-# class HomeNews(MyMixin, ListView):
-#     model = News
-#     template_name = 'ScheduleSystem/home_news_list.html'
-#     context_object_name = 'ScheduleSystem'
-#     mixin_prop = 'hello world'
-#     paginate_by = 2
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = 'Главная страница'
-#         context['mixin_prop'] = self.get_prop()
-#         return context
-#
-#     def get_queryset(self):
-#         return News.objects.filter(is_published=True).select_related('category')
-
-
-# def index(request):
-#     students = News.objects.all()
-#     context = {
-#         'ScheduleSystem': ScheduleSystem,
-#         'title': 'Список новостей',
-#     }
-#     return render(request, template_name='ScheduleSystem/index.html', context=context)
-
-
-# def get_category(request, category_id):
-#     ScheduleSystem = News.objects.filter(category_id=category_id)
-#     category = Category.objects.get(pk=category_id)
-#     return render(request, 'ScheduleSystem/category.html', {'ScheduleSystem': ScheduleSystem, 'category': category})

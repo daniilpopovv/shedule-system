@@ -5,7 +5,7 @@ from ScheduleSystem.models import Schedules
 register = template.Library()
 
 
-@register.inclusion_tag('ScheduleSystem/list_categories.html', takes_context=True)
+@register.inclusion_tag('ScheduleSystem/schedule.html', takes_context=True)
 def show_categories(context):
     # получение request через context
     request = context['request']

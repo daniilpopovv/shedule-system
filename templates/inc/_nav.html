@@ -13,9 +13,9 @@
 
         <span class="navbar-text me-lg-5">
             {% if request.user.is_authenticated %}
-                Добро пожаловать, {{ user.username }} | <a href="{% url 'logout' %}">Выход</a>
+                Добро пожаловать, {{ user.first_name }} | <a href="{% url 'logout' %}">Выход</a>
             {% else %}
-                <a href="{% url 'login' %}">Авторизация</a>
+                <a href="{% url 'login' %}">Войти на сайт</a>
             {% endif %}
         </span>
     </div>
