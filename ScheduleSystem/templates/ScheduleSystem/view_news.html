@@ -1,32 +1,22 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ news_item }} :: {{ block.super }}
-{% endblock %}
-
-{% block sidebar %}
-   {% include 'inc/_sidebar.html' %}
+    {{ news_item.title }}
 {% endblock %}
 
 {% block content %}
-        text
         <div class="card mb-3">
             <div class="card-body">
                 <div class="media">
-{#                    {% if item.photo %}#}
-{#                        <img src="{{ item.photo.url }}" alt="" width="350" height="280" class="mr-3">#}
-{#                    {% else %}#}
-{#                        <img src="https://picsum.photos/seed/picsum/350/235" alt="">#}
-{#                    {% endif %}#}
                     <div class="media-body">
-                        <h5 class="card-title ">{{ item.title }}</h5>
-                        <p class="card-text">{{ item.content|safe|linebreaks|truncatewords:50 }}</p>
+                        <h5 class="card-title ">{{ news_item.title }}</h5>
+                        <p class="card-text">{{ news_item.content|safe|linebreaks|truncatewords:50 }}</p>
                     </div>
                 </div>
 
             </div>
             <div class="card-footer text-muted">
-                {{ item.created_at|date:"Y-m-d H:i:s" }}
+                {{ news_item.created_at|date:"Y-m-d H:i" }}
             </div>
         </div>
 {% endblock %}

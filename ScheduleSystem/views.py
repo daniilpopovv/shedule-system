@@ -1,5 +1,5 @@
 import datetime
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView
 
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -27,9 +27,8 @@ class HomeNews(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Страница новости'
+        context['title'] = 'Новости'
         return context
-
 
     def get_queryset(self):
         return News.objects.filter(is_published=True)
@@ -37,6 +36,7 @@ class HomeNews(ListView):
 
 class ViewNews(DetailView):
     model = News
+    template_name = 'ScheduleSystem/view_news.html'
     context_object_name = 'news_item'
 
 
@@ -104,7 +104,6 @@ class ViewLessons(LoginRequiredMixin, DetailView):
                                                 id_subject=schedule.id_subject).attendance
         except Attendance.DoesNotExist:
             attendance = 0
-            comment = None
 
         # получение текущего времени
         time_now = datetime.datetime.now()

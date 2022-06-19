@@ -8,9 +8,10 @@ class Students(models.Model):
     user = models.OneToOneField(User, verbose_name='Логин студента', on_delete=models.CASCADE)
     name_student = models.CharField(verbose_name='ФИО студента', max_length=50)
     id_course = models.ForeignKey('Courses', verbose_name='Номер курса', on_delete=models.PROTECT, null=True)
-    id_department = models.ForeignKey('Departments', verbose_name='Кафедра', on_delete=models.PROTECT,null=True)
+    id_department = models.ForeignKey('Departments', verbose_name='Кафедра', on_delete=models.PROTECT, null=True)
     id_group = models.ForeignKey('Groups', verbose_name='Группа', on_delete=models.PROTECT, null=True)
-    id_educational_form = models.ForeignKey('EducationalForms', verbose_name='Форма обучения', on_delete=models.PROTECT, null=True)
+    id_educational_form = models.ForeignKey('EducationalForms', verbose_name='Форма обучения', on_delete=models.PROTECT,
+                                            null=True)
 
     def __str__(self):
         return self.name_student
@@ -196,4 +197,3 @@ class News(models.Model):
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
         ordering = ['-created_at']
-
