@@ -10,6 +10,9 @@ def show_categories(context):
     # получение request через context
     request = context['request']
 
+    # переменная для отображения оповещения, что сегодня нет занятий
+    freeday = 0
+
     # получение текущего дня недели для фильтрации расписания
     weekdaynow = datetime.datetime.today().isoweekday()
     weekdayname = 'Неизвестно'
@@ -38,8 +41,10 @@ def show_categories(context):
             namegroup = request.user.students.id_group
             schedule_today = Schedules.objects.filter(id_week_day__name_day=weekdayname, id_group=namegroup).order_by(
                 'id_lessons_time__number_lesson')
+            if not schedule_today:
+                freeday = 1
     else:
         schedule_today = ''
         namegroup = ''
 
-    return {"schedule_today": schedule_today, 'namegroup': namegroup}
+    return {"schedule_today": schedule_today, 'namegroup': namegroup, 'freeday': freeday}

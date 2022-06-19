@@ -6,12 +6,6 @@ nav.navbar {
     background-color: #FFFFFF;
 }
 
-.navbar a:first-child {
-    font-family: Montserrat, sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-}
-
 .navbar .navbar-collapse li {
     display: block;
     width: 170px;
@@ -42,6 +36,17 @@ nav.navbar {
     color: #000000;
     display: block;
     text-decoration: none;
+}
+
+.navbar a.navbar-brand {
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.navbar img.navbar-brand {
+    display: block;
+    max-width: 50px;
 }
 
 .navbar a:last-child {
