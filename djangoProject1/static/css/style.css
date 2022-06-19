@@ -1,18 +1,32 @@
 .errorlist {
     color: red;
 }
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-image: url("../background.png");
+    background-size: cover;
+}
 
 nav.navbar {
     background-color: #FFFFFF;
 }
 
 .navbar .navbar-collapse li {
-    display: block;
+    display: flex;
     width: 170px;
     height: 45px;
     left: 398.48px;
     top: 35px;
     margin-left: 50px;
+    justify-content: center;
+    align-items: center;
 
     background: #BEA2EB;
     box-shadow: 0px 6px 20px 1px rgba(0, 0, 0, 0.4);
@@ -22,11 +36,11 @@ nav.navbar {
 .navbar .navbar-nav .nav-item a {
     font-family: Montserrat, sans-serif;
     font-weight: 600;
-    font-size: 18px;
-    position: center;
+    font-size: 16px;
     text-align: center;
     text-transform: capitalize;
     color: #FFFFFF;
+
 }
 
 .navbar .navbar-text a {
@@ -49,7 +63,7 @@ nav.navbar {
     max-width: 50px;
 }
 
-.navbar a:last-child {
+.navbar .navbar-collapse a.logout {
     font-family: Montserrat, sans-serif;
     font-weight: 800;
     font-size: 12px;
@@ -60,4 +74,39 @@ nav.navbar {
 
 .attendance-disappear {
     display: none;
+}
+
+div.auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+    box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    border-style: none;
+    padding-top: 20px;
+    width: 35%;
+    margin-top: 100px;
+}
+
+.auth button.btn-primary {
+    background: #7D44D6;
+    box-shadow: 0px 6px 20px 1px rgba(0, 0, 0, 0.4);
+    border-radius: 16px;
+    border-style: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.auth h1.card-title {
+    font-size: 20px;
+    font-family: Montserrat, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.container div.auth-row {
+    justify-content: center;
+    height: 100%;
 }
