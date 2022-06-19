@@ -12,7 +12,7 @@ class Students(models.Model): # g
     id_group = models.ForeignKey('Groups', verbose_name='Группа', on_delete=models.PROTECT)
     id_educational_form = models.ForeignKey('EducationalForms', verbose_name='Форма обучения', on_delete=models.PROTECT)
 
-    def __str__(self):
+    def __str__(self): # ff
         return self.name_student
 
     class Meta:
