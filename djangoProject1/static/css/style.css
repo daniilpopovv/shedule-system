@@ -96,6 +96,11 @@ div.auth {
     border-style: none;
     padding-top: 8px;
     padding-bottom: 8px;
+    font-size: 14px;
+    font-family: Montserrat, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
 }
 
 .auth h1.card-title {
