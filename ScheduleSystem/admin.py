@@ -4,12 +4,12 @@ from .models import *
 
 @admin.register(Students)
 class StudentsAdmin(admin.ModelAdmin):
-    list_display = ('name_student', 'id_group')
+    list_display = ('name_student','student_group')
     search_fields = ('name_student', 'id_group')
 
-    # def student_group(self, obj): 'student_group'
-    #     return obj.id_group.name_group
-    # student_group.short_description = 'Название группы'
+    def student_group(self, obj):
+        return obj.id_group.name_group
+    student_group.short_description = 'Название группы'
 
 
 @admin.register(Departments)
