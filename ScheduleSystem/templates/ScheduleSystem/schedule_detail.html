@@ -17,9 +17,9 @@
             <h6><i class="fa-regular fa-clock"></i> Время занятия:</h6>
             <p class="card-text"> {{ schedule.id_lessons_time.time_lesson }}</p>
             <h6><i class="fa-solid fa-book"></i> Количество часов:</h6>
-            <p class="card-text"> {{ schedule.id_lessons_time.time_lesson }}</p>
+            <p class="card-text"> {{ schedule.id_subject.hours }}</p>
         <h6><i class="fa-solid fa-pen"></i> Экзаменационная форма:</h6>
-            <p class="card-text mb-5"> {{ schedule.id_lessons_time.time_lesson }}</p>
+            <p class="card-text mb-5"> {{ schedule.id_subject.exam_form }}</p>
 
 
             {% if attendance %}
