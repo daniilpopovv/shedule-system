@@ -64,9 +64,13 @@ class Subjects(models.Model):
     hours = models.IntegerField(verbose_name='Часы', default=1)
     exam_form = models.CharField(verbose_name='Экзаменационная форма', max_length=20)
     image_subject = models.ImageField(upload_to='subjects_images/', default='subjects_images/default.jpg')
+    num_cub = models.CharField(verbose_name='Кабинет', max_length=20, blank=True)
 
     def __str__(self):
         return self.name_subject
+
+    def get_absolute_url(self):
+        return reverse('view_subjects', kwargs={"pk": self.pk})
 
     class Meta:
         verbose_name = 'Предмет'

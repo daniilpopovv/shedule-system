@@ -62,7 +62,7 @@ class ViewNews(DetailView):
 
 class SubjectsList(ListView):
     model = Subjects
-    template_name = 'ScheduleSystem/subjects.html'
+    template_name = 'ScheduleSystem/subjects_list.html'
     context_object_name = 'subjects'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -76,6 +76,12 @@ class SubjectsList(ListView):
             return subjects
         else:
             return Subjects.objects.all()
+
+
+class ViewSubjects(DetailView):
+    model = Subjects
+    template_name = 'ScheduleSystem/view_subjects.html'
+    context_object_name = 'subjects_item'
 
 
 class ViewLessons(LoginRequiredMixin, DetailView):
