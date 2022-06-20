@@ -99,7 +99,7 @@ class ViewLessons(LoginRequiredMixin, DetailView):
 
         # значения по умолчанию для проверки
         canattend = 1
-        subject_started = 1
+        subject_started = 0
 
         try:
             attendance = Attendance.objects.get(date_attendance=datetime.datetime.today(),
