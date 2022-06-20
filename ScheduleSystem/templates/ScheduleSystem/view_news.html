@@ -4,19 +4,27 @@
     {{ news_item.title }}
 {% endblock %}
 
-{% block content %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="media">
-                    <div class="media-body">
-                        <h5 class="card-title ">{{ news_item.title }}</h5>
-                        <p class="card-text">{{ news_item.content|safe|linebreaks }}</p>
-                    </div>
-                </div>
+{% block sidebar %}
+    <div class="list-group">
+        <a aria-current="true" href="{% url 'news' %}" class="list-group-item list-group-item-action">
+            <i class="fa-solid fa-arrow-left-long"></i> назад
+        </a>
+    </div>
+{% endblock %}
 
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="media">
+                <div class="media-body">
+                    <h5 class="card-title ">{{ news_item.title }}</h5>
+                    <p class="card-text">{{ news_item.content|safe|linebreaks }}</p>
+                </div>
             </div>
-            <div class="card-footer text-muted">
-                {{ news_item.created_at|date:"Y-m-d H:i" }}
-            </div>
+
         </div>
+        <div class="card-footer text-muted">
+            {{ news_item.created_at|date:"Y-m-d H:i" }}
+        </div>
+    </div>
 {% endblock %}
