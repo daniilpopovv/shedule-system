@@ -21,9 +21,17 @@
 .container .card a {
     text-decoration: none;
     color: white;
-    font-size: 20px;
+    font-size: 25px;
     font-family: Montserrat, sans-serif;
     font-style: normal;
     font-weight: bold;
+    line-height: 150%;
+}
+
+.container .card p.card-text {
+    font-size: 15px;
+    font-family: Montserrat, sans-serif;
+    font-style: normal;
+    font-weight: normal;
     line-height: 150%;
 }
