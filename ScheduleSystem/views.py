@@ -10,6 +10,27 @@ from .forms import UserLoginForm, AttendanceForm
 from .models import *
 
 
+def user_login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserLoginForm()
+
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    return render(request, 'ScheduleSystem/login.html', {"form": form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+
+
 def index(request):
     context = {
         'ScheduleSystem': ScheduleSystem,
@@ -39,25 +60,22 @@ class ViewNews(DetailView):
     context_object_name = 'news_item'
 
 
-def user_login(request):
-    if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserLoginForm()
+class SubjectsList(ListView):
+    model = Subjects
+    template_name = 'ScheduleSystem/subjects.html'
+    context_object_name = 'subjects'
 
-    if request.user.is_authenticated:
-        return redirect('home')
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
-    return render(request, 'ScheduleSystem/login.html', {"form": form})
-
-
-def user_logout(request):
-    logout(request)
-    return redirect('login')
+    def get_queryset(self):
+        auth_user = self.request.user
+        if auth_user.is_staff == 0:
+            subjects = Subjects.objects.filter(id_group=auth_user.students.id_group)
+            return subjects
+        else:
+            return Subjects.objects.all()
 
 
 class ViewLessons(LoginRequiredMixin, DetailView):
