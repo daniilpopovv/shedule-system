@@ -15,9 +15,11 @@
             <h6><i class="fa-solid fa-chalkboard-user"></i> Преподаватель:</h6>
             <p class="card-text">{{ schedule.id_subject.id_teacher }}</p>
             <h6><i class="fa-regular fa-clock"></i> Время занятия:</h6>
-            <p class="card-text mb-5">
-                {{ schedule.id_lessons_time.time_lesson }}
-            </p>
+            <p class="card-text"> {{ schedule.id_lessons_time.time_lesson }}</p>
+            <h6><i class="fa-solid fa-book"></i> Количество часов:</h6>
+            <p class="card-text"> {{ schedule.id_lessons_time.time_lesson }}</p>
+        <h6><i class="fa-solid fa-pen"></i> Экзаменационная форма:</h6>
+            <p class="card-text mb-5"> {{ schedule.id_lessons_time.time_lesson }}</p>
 
 
             {% if attendance %}
@@ -32,7 +34,7 @@
                     </button>
                 </form>
             {% elif canattend %}
-                <button class="btn btn-sm btn-outline-warning" name="something">Занятие пока не началось</button>
+                <button class="btn btn-sm btn-outline-warning" name="something">Занятие пока не началось <i class="fa-solid fa-hourglass-start"></i></button>
             {% else %}
                 <button class="btn btn-sm btn-danger attend-false" name="something">Вас не было на занятии
                 </button>
