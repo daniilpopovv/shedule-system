@@ -63,6 +63,7 @@ class Subjects(models.Model):
     name_subject = models.CharField(verbose_name='Название предмета', max_length=50)
     hours = models.IntegerField(verbose_name='Часы', default=1)
     exam_form = models.CharField(verbose_name='Экзаменационная форма', max_length=20)
+    image_subject = models.ImageField(upload_to='subjects_images/', default='subjects_images/default.jpg')
 
     def __str__(self):
         return self.name_subject

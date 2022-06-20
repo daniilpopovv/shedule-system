@@ -8,7 +8,9 @@
 .container .row div.card {
     width: 35%;
     margin-right: 50px;
-    background-color: gray;
+    box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    border-style: none;
 }
 
 .container .row div.card-body {

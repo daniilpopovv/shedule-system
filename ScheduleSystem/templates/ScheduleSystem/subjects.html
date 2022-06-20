@@ -39,7 +39,7 @@
             {% endfor %}
         {% endif %}
         {% for item in subjects %}
-            <div class="card mb-3 p-0">
+            <div class="card mb-3 p-0" style="background-image: url({{ item.image_subject.url }}); background-size: 100%; background-color: rgba(0,0,0,.50); background-blend-mode: multiply;">
                 <a href="{{ item.get_absolute_url }}">
                     <div class="card-body w-100">
                         <div class="media">
