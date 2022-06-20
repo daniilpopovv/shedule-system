@@ -10,4 +10,4 @@ class UserLoginForm(AuthenticationForm):
 class AttendanceForm(forms.Form):
     attendance_checkbox = forms.BooleanField(initial=True,
                                              widget=forms.CheckboxInput(attrs={'class': 'attendance-disappear'}),
-                                             label='Нажмите, чтобы отметиться')
+                                             label='')
