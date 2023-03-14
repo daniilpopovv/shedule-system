@@ -1,16 +1,21 @@
+from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
+from django.contrib import admin
+from django.urls import path, include
 
-from djangoProject1 import settings
-from .views import *
 
 urlpatterns = [
-    path('', user_login, name='login'),
-    path('schedule/', index, name='home'),
-    path('logout/', user_logout, name='logout'),
-    path('news/', HomeNews.as_view(), name='news'),
-    path('news/<int:pk>', ViewNews.as_view(), name='view_news'),
-    path('subjects/', SubjectsList.as_view(), name='subjects_list'),
-    path('subjects/<int:pk>', ViewSubjects.as_view(), name='view_subjects'),
-    path('schedule/<int:pk>/', ViewLessons.as_view(), name='view_lessons'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('admin/', admin.site.urls),
+    path('', include('Schedule.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
+]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# if settings.DEBUG:
+#     import debug_toolbar
+#
+#     urlpatterns = [
+#                       path('__debug__/', include(debug_toolbar.urls)),
+#                   ] + urlpatterns
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
