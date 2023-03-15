@@ -2,25 +2,26 @@ import datetime
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
-import Schedule
 from .forms import AttendanceForm
 from .models import *
 
 
-def index(request):
-    context = {
-        'Schedule': Schedule,
-        'title': 'Ваше расписание',
-    }
-    return render(request, template_name='Schedule/index.html', context=context)
+class ViewTimesheet(ListView):
+    model = Schedule
+    template_name = 'timesheets/schedule.html'
+    context_object_name = 'schedule_today'
+
+    def get_queryset(self):
+        id_group = self.request.user.student.id_group
+        return Schedule.objects.filter(id_group=id_group, )
 
 
 class ViewLessons(LoginRequiredMixin, DetailView):
     model = Schedule
     context_object_name = 'schedule_item'
-    template_name = 'Schedule/schedule_detail.html'
+    template_name = 'timesheets/schedule_detail.html'
     form = AttendanceForm
 
     # Handle POST GTTP requests

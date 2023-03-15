@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class ScheduleConfig(AppConfig):
+class TimesheetsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Schedule'
+    name = 'timesheets'
     verbose_name = 'Расписание'

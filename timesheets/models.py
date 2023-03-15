@@ -6,11 +6,11 @@ from django.urls import reverse
 class Student(models.Model):
     user = models.OneToOneField(User, verbose_name='Логин студента', on_delete=models.CASCADE)
     name_student = models.CharField(verbose_name='ФИО студента', max_length=50)
-    id_course = models.ForeignKey('Schedule.Course', verbose_name='Номер курса', on_delete=models.PROTECT, null=True)
-    id_department = models.ForeignKey('Schedule.Department', verbose_name='Кафедра', on_delete=models.PROTECT,
+    id_course = models.ForeignKey('timesheets.Course', verbose_name='Номер курса', on_delete=models.PROTECT, null=True)
+    id_department = models.ForeignKey('timesheets.Department', verbose_name='Кафедра', on_delete=models.PROTECT,
                                       null=True)
-    id_group = models.ForeignKey('Schedule.Group', verbose_name='Группа', on_delete=models.PROTECT, null=True)
-    id_educational_form = models.ForeignKey('Schedule.EducationalForm', verbose_name='Форма обучения',
+    id_group = models.ForeignKey('timesheets.Group', verbose_name='Группа', on_delete=models.PROTECT, null=True)
+    id_educational_form = models.ForeignKey('timesheets.EducationalForm', verbose_name='Форма обучения',
                                             on_delete=models.PROTECT,
                                             null=True)
 
@@ -68,9 +68,9 @@ class LessonTime(models.Model):
 
 class Attendance(models.Model):
     date_attendance = models.DateField(verbose_name='Дата посещаемости')
-    id_lesson = models.ForeignKey('Schedule.LessonTime', on_delete=models.PROTECT, default=1)
+    id_lesson = models.ForeignKey('timesheets.LessonTime', on_delete=models.PROTECT, default=1)
     attendance = models.BooleanField(verbose_name='Присутствие', default=False)
-    id_student = models.ForeignKey('Schedule.Student', on_delete=models.PROTECT, default=1)
+    id_student = models.ForeignKey('timesheets.Student', on_delete=models.PROTECT, default=1)
     id_subject = models.ForeignKey('subjects.Subject', on_delete=models.PROTECT, default=1)
 
     def get_absolute_url(self):
@@ -133,11 +133,11 @@ class WeekDay(models.Model):
 
 
 class Schedule(models.Model):
-    id_group = models.ForeignKey('Schedule.Group', verbose_name='Группа', on_delete=models.PROTECT, default=1)
+    id_group = models.ForeignKey('timesheets.Group', verbose_name='Группа', on_delete=models.PROTECT, default=1)
     id_subject = models.ForeignKey('subjects.Subject', verbose_name='Предмет', on_delete=models.PROTECT, default=1)
-    id_lessons_time = models.ForeignKey('Schedule.LessonTime', verbose_name='Номер пары', on_delete=models.PROTECT,
+    id_lessons_time = models.ForeignKey('timesheets.LessonTime', verbose_name='Номер пары', on_delete=models.PROTECT,
                                         default=1)
-    id_week_day = models.ForeignKey('Schedule.WeekDay', verbose_name='День недели', on_delete=models.PROTECT, default=1)
+    id_week_day = models.ForeignKey('timesheets.WeekDay', verbose_name='День недели', on_delete=models.PROTECT, default=1)
 
     def get_absolute_url(self):
         return reverse('view_lessons', kwargs={"pk": self.pk})

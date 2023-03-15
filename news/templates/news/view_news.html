@@ -1,15 +1,7 @@
-{% extends 'Schedule/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
     {{ news_item.title }}
-{% endblock %}
-
-{% block sidebar %}
-    <div class="list-group">
-        <a aria-current="true" href="{% url 'news' %}" class="list-group-item list-group-item-action">
-            <i class="fa-solid fa-arrow-left-long"></i> назад
-        </a>
-    </div>
 {% endblock %}
 
 {% block content %}

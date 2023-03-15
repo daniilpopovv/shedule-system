@@ -2,12 +2,12 @@ import datetime
 
 from django import template
 
-from Schedule.models import Schedule
+from timesheets.models import Schedule
 
 register = template.Library()
 
 
-@register.inclusion_tag('Schedule/schedule.html', takes_context=True)
+@register.inclusion_tag('timesheets/schedule.html', takes_context=True)
 def show_categories(context):
     # получение request через context
     request = context['request']

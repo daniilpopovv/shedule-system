@@ -3,15 +3,15 @@ from django.urls import reverse
 
 
 class Subject(models.Model):
-    id_teacher = models.ForeignKey('Schedule.Teacher', verbose_name='Преподаватель', on_delete=models.PROTECT,
+    id_teacher = models.ForeignKey('timesheets.Teacher', verbose_name='Преподаватель', on_delete=models.PROTECT,
                                    default=1)
-    id_department = models.ForeignKey('Schedule.Department', verbose_name='Название кафедры', on_delete=models.PROTECT,
+    id_department = models.ForeignKey('timesheets.Department', verbose_name='Название кафедры', on_delete=models.PROTECT,
                                       default=1)
-    id_course = models.ForeignKey('Schedule.Course', verbose_name='Курс', on_delete=models.PROTECT, default=1)
-    id_educational_form = models.ForeignKey('Schedule.EducationalForm', verbose_name='Форма обучения',
+    id_course = models.ForeignKey('timesheets.Course', verbose_name='Курс', on_delete=models.PROTECT, default=1)
+    id_educational_form = models.ForeignKey('timesheets.EducationalForm', verbose_name='Форма обучения',
                                             on_delete=models.PROTECT,
                                             default=1)
-    id_group = models.ForeignKey('Schedule.Group', verbose_name='Номер группы', on_delete=models.PROTECT, default=1)
+    id_group = models.ForeignKey('timesheets.Group', verbose_name='Номер группы', on_delete=models.PROTECT, default=1)
     name_subject = models.CharField(verbose_name='Название предмета', max_length=50)
     hours = models.IntegerField(verbose_name='Часы', default=1)
     exam_form = models.CharField(verbose_name='Экзаменационная форма', max_length=20)
