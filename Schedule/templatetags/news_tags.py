@@ -1,6 +1,8 @@
 import datetime
+
 from django import template
-from Schedule.models import Schedules
+
+from Schedule.models import Schedule
 
 register = template.Library()
 
@@ -39,7 +41,7 @@ def show_categories(context):
             schedule_today = ''
         else:
             namegroup = request.user.students.id_group
-            schedule_today = Schedules.objects.filter(id_week_day__name_day=weekdayname, id_group=namegroup).order_by(
+            schedule_today = Schedule.objects.filter(id_week_day__name_day=weekdayname, id_group=namegroup).order_by(
                 'id_lessons_time__number_lesson')
             if not schedule_today:
                 freeday = 1

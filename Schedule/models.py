@@ -1,16 +1,17 @@
-from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
 
-class Students(models.Model):
+class Student(models.Model):
     user = models.OneToOneField(User, verbose_name='Логин студента', on_delete=models.CASCADE)
     name_student = models.CharField(verbose_name='ФИО студента', max_length=50)
-    id_course = models.ForeignKey('Courses', verbose_name='Номер курса', on_delete=models.PROTECT, null=True)
-    id_department = models.ForeignKey('Departments', verbose_name='Кафедра', on_delete=models.PROTECT, null=True)
-    id_group = models.ForeignKey('Groups', verbose_name='Группа', on_delete=models.PROTECT, null=True)
-    id_educational_form = models.ForeignKey('EducationalForms', verbose_name='Форма обучения', on_delete=models.PROTECT,
+    id_course = models.ForeignKey('Schedule.Course', verbose_name='Номер курса', on_delete=models.PROTECT, null=True)
+    id_department = models.ForeignKey('Schedule.Department', verbose_name='Кафедра', on_delete=models.PROTECT,
+                                      null=True)
+    id_group = models.ForeignKey('Schedule.Group', verbose_name='Группа', on_delete=models.PROTECT, null=True)
+    id_educational_form = models.ForeignKey('Schedule.EducationalForm', verbose_name='Форма обучения',
+                                            on_delete=models.PROTECT,
                                             null=True)
 
     def __str__(self):
@@ -28,7 +29,7 @@ class Students(models.Model):
     #     instance.profile.save()
 
 
-class Departments(models.Model):
+class Department(models.Model):
     name_department = models.CharField(verbose_name='Название кафедры', max_length=70)
 
     def __str__(self):
@@ -40,7 +41,7 @@ class Departments(models.Model):
         ordering = ['-id']
 
 
-class Courses(models.Model):
+class Course(models.Model):
     number_course = models.IntegerField(verbose_name='Номер курса')
 
     def __str__(self):
@@ -52,45 +53,7 @@ class Courses(models.Model):
         ordering = ['-id']
 
 
-class Subjects(models.Model):
-    id_teacher = models.ForeignKey('Teachers', verbose_name='Преподаватель', on_delete=models.PROTECT, default=1)
-    id_department = models.ForeignKey('Departments', verbose_name='Название кафедры', on_delete=models.PROTECT,
-                                      default=1)
-    id_course = models.ForeignKey('Courses', verbose_name='Курс', on_delete=models.PROTECT, default=1)
-    id_educational_form = models.ForeignKey('EducationalForms', verbose_name='Форма обучения', on_delete=models.PROTECT,
-                                            default=1)
-    id_group = models.ForeignKey('Groups', verbose_name='Номер группы', on_delete=models.PROTECT, default=1)
-    name_subject = models.CharField(verbose_name='Название предмета', max_length=50)
-    hours = models.IntegerField(verbose_name='Часы', default=1)
-    exam_form = models.CharField(verbose_name='Экзаменационная форма', max_length=20)
-    image_subject = models.ImageField(upload_to='subjects_images/', default='subjects_images/default.jpg')
-    num_cub = models.CharField(verbose_name='Кабинет', max_length=20, blank=True)
-
-    def __str__(self):
-        return self.name_subject
-
-    def get_absolute_url(self):
-        return reverse('view_subjects', kwargs={"pk": self.pk})
-
-    class Meta:
-        verbose_name = 'Предмет'
-        verbose_name_plural = 'Предметы'
-        ordering = ['-id']
-
-
-class Groups(models.Model):
-    name_group = models.CharField(verbose_name='Название группы', max_length=30)
-
-    def __str__(self):
-        return self.name_group
-
-    class Meta:
-        verbose_name = 'Группа'
-        verbose_name_plural = 'Группы'
-        ordering = ['-id']
-
-
-class LessonsTime(models.Model):
+class LessonTime(models.Model):
     number_lesson = models.IntegerField(verbose_name='Номер пары')
     time_lesson = models.CharField(verbose_name='Время пары', max_length=20)
 
@@ -105,10 +68,10 @@ class LessonsTime(models.Model):
 
 class Attendance(models.Model):
     date_attendance = models.DateField(verbose_name='Дата посещаемости')
-    id_lesson = models.ForeignKey('LessonsTime', on_delete=models.PROTECT, default=1)
+    id_lesson = models.ForeignKey('Schedule.LessonTime', on_delete=models.PROTECT, default=1)
     attendance = models.BooleanField(verbose_name='Присутствие', default=False)
-    id_student = models.ForeignKey('Students', on_delete=models.PROTECT, default=1)
-    id_subject = models.ForeignKey('Subjects', on_delete=models.PROTECT, default=1)
+    id_student = models.ForeignKey('Schedule.Student', on_delete=models.PROTECT, default=1)
+    id_subject = models.ForeignKey('subjects.Subject', on_delete=models.PROTECT, default=1)
 
     def get_absolute_url(self):
         return reverse('view_news', kwargs={"pk": self.pk})
@@ -119,7 +82,7 @@ class Attendance(models.Model):
         ordering = ['-id']
 
 
-class Teachers(models.Model):
+class Teacher(models.Model):
     name_teacher = models.CharField(verbose_name='ФИО преподавателя', max_length=50)
 
     def __str__(self):
@@ -131,7 +94,7 @@ class Teachers(models.Model):
         ordering = ['-id']
 
 
-class EducationalForms(models.Model):
+class EducationalForm(models.Model):
     name_educational_form = models.CharField(verbose_name='Название формы обучения', max_length=30)
 
     def __str__(self):
@@ -157,7 +120,7 @@ class Support(models.Model):
         ordering = ['-id']
 
 
-class WeekDays(models.Model):
+class WeekDay(models.Model):
     name_day = models.CharField(verbose_name='Название дня недели', max_length=20)
 
     def __str__(self):
@@ -169,11 +132,12 @@ class WeekDays(models.Model):
         ordering = ['-id']
 
 
-class Schedules(models.Model):
-    id_group = models.ForeignKey('Groups', verbose_name='Группа', on_delete=models.PROTECT, default=1)
-    id_subject = models.ForeignKey('Subjects', verbose_name='Предмет', on_delete=models.PROTECT, default=1)
-    id_lessons_time = models.ForeignKey('LessonsTime', verbose_name='Номер пары', on_delete=models.PROTECT, default=1)
-    id_week_day = models.ForeignKey('WeekDays', verbose_name='День недели', on_delete=models.PROTECT, default=1)
+class Schedule(models.Model):
+    id_group = models.ForeignKey('Schedule.Group', verbose_name='Группа', on_delete=models.PROTECT, default=1)
+    id_subject = models.ForeignKey('subjects.Subject', verbose_name='Предмет', on_delete=models.PROTECT, default=1)
+    id_lessons_time = models.ForeignKey('Schedule.LessonTime', verbose_name='Номер пары', on_delete=models.PROTECT,
+                                        default=1)
+    id_week_day = models.ForeignKey('Schedule.WeekDay', verbose_name='День недели', on_delete=models.PROTECT, default=1)
 
     def get_absolute_url(self):
         return reverse('view_lessons', kwargs={"pk": self.pk})
@@ -184,20 +148,13 @@ class Schedules(models.Model):
         ordering = ['-id']
 
 
-class News(models.Model):
-    title = models.CharField(max_length=150, verbose_name='Наименование')
-    content = models.TextField(blank=True, verbose_name='Контент')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
-    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
-
-    def get_absolute_url(self):
-        return reverse('view_news', kwargs={"pk": self.pk})
+class Group(models.Model):
+    name_group = models.CharField(verbose_name='Название группы', max_length=30)
 
     def __str__(self):
-        return self.title
+        return self.name_group
 
     class Meta:
-        verbose_name = 'Новость'
-        verbose_name_plural = 'Новости'
-        ordering = ['-created_at']
+        verbose_name = 'Группа'
+        verbose_name_plural = 'Группы'
+        ordering = ['-id']

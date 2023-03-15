@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import *
 
 
-@admin.register(Students)
+@admin.register(Student)
 class StudentsAdmin(admin.ModelAdmin):
     list_display = ('name_student', 'student_group')
     search_fields = ('name_student', 'id_group')
@@ -15,44 +15,27 @@ class StudentsAdmin(admin.ModelAdmin):
     student_group.short_description = 'Название группы'
 
 
-@admin.register(Departments)
+@admin.register(Department)
 class DepartmentsAdmin(admin.ModelAdmin):
     list_display = ('name_department',)
     list_display_links = ('name_department',)
     search_fields = ('name_department',)
 
 
-@admin.register(News)
-class NewsAdmin(admin.ModelAdmin):
-    list_display = ('title', 'content', 'created_at', 'updated_at')
-    list_display_links = ('title',)
-    search_fields = ('title',)
-
-
-@admin.register(Courses)
+@admin.register(Course)
 class CoursesAdmin(admin.ModelAdmin):
     list_display = ('number_course',)
     list_display_links = ('number_course',)
 
 
-@admin.register(Subjects)
-class SubjectsAdmin(admin.ModelAdmin):
-    list_display = (
-        'name_subject', 'id_teacher', 'id_department', 'id_course', 'id_educational_form', 'id_group', 'exam_form',
-        'hours')
-    list_display_links = ('name_subject',)
-    list_filter = ('id_teacher__name_teacher', 'id_department__name_department', 'id_course__number_course',
-                   'id_educational_form__name_educational_form', 'id_group')
-
-
-@admin.register(Groups)
+@admin.register(Group)
 class GroupsAdmin(admin.ModelAdmin):
     list_display = ('name_group',)
     list_display_links = ('name_group',)
     search_fields = ('name_group',)
 
 
-@admin.register(LessonsTime)
+@admin.register(LessonTime)
 class LessonsTimeAdmin(admin.ModelAdmin):
     list_display = ('number_lesson', 'time_lesson')
     list_display_links = ('number_lesson',)
@@ -67,14 +50,14 @@ class AttendanceAdmin(admin.ModelAdmin):
     list_filter = ('date_attendance', 'id_subject__name_subject', 'id_student__id_group__name_group')
 
 
-@admin.register(Teachers)
+@admin.register(Teacher)
 class TeachersAdmin(admin.ModelAdmin):
     list_display = ('name_teacher',)
     list_display_links = ('name_teacher',)
     search_fields = ('name_teacher',)
 
 
-@admin.register(EducationalForms)
+@admin.register(EducationalForm)
 class EducationalFormsAdmin(admin.ModelAdmin):
     list_display = ('name_educational_form',)
 
@@ -87,12 +70,12 @@ class SupportAdmin(admin.ModelAdmin):
     search_fields = ('name_support', 'email_support')
 
 
-@admin.register(WeekDays)
+@admin.register(WeekDay)
 class WeekDaysAdmin(admin.ModelAdmin):
     list_display = ('name_day',)
 
 
-@admin.register(Schedules)
+@admin.register(Schedule)
 class SchedulesAdmin(admin.ModelAdmin):
     list_display = ('id_group', 'id_subject', 'id_lessons_time', 'id_week_day',)
     list_display_links = ('id_subject',)
