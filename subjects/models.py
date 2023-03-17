@@ -3,23 +3,48 @@ from django.urls import reverse
 
 
 class Subject(models.Model):
-    id_teacher = models.ForeignKey('timesheets.Teacher', verbose_name='Преподаватель', on_delete=models.PROTECT,
-                                   default=1)
-    id_department = models.ForeignKey('timesheets.Department', verbose_name='Название кафедры', on_delete=models.PROTECT,
-                                      default=1)
-    id_course = models.ForeignKey('timesheets.Course', verbose_name='Курс', on_delete=models.PROTECT, default=1)
-    id_educational_form = models.ForeignKey('timesheets.EducationalForm', verbose_name='Форма обучения',
-                                            on_delete=models.PROTECT,
-                                            default=1)
-    id_group = models.ForeignKey('timesheets.Group', verbose_name='Номер группы', on_delete=models.PROTECT, default=1)
-    name_subject = models.CharField(verbose_name='Название предмета', max_length=50)
+    name = models.CharField(verbose_name='Название предмета', max_length=50)
     hours = models.IntegerField(verbose_name='Часы', default=1)
-    exam_form = models.CharField(verbose_name='Экзаменационная форма', max_length=20)
-    image_subject = models.ImageField(upload_to='subjects_images/', default='subjects_images/default.jpg')
-    num_cub = models.CharField(verbose_name='Кабинет', max_length=20, blank=True)
+    image = models.ImageField(upload_to='subjects_images/', default='subjects_images/default.jpg')
+
+    id_course = models.ForeignKey('timesheets.Course', verbose_name='Курс', on_delete=models.PROTECT, default=1)
+    id_group = models.ForeignKey('timesheets.Group', verbose_name='Номер группы', on_delete=models.PROTECT, default=1)
+    id_teacher = models.ForeignKey(
+        'timesheets.Teacher',
+        verbose_name='Преподаватель',
+        on_delete=models.PROTECT,
+        default=1
+    )
+    id_department = models.ForeignKey(
+        'timesheets.Department',
+        verbose_name='Название кафедры',
+        on_delete=models.PROTECT,
+        default=1
+    )
+
+    id_educational_form = models.ForeignKey(
+        'timesheets.EducationalForm', verbose_name='Форма обучения',
+        on_delete=models.PROTECT,
+        default=1
+    )
+
+    exam_form_choices = [
+        ('ex', 'Экзамен'),
+        ('zch', 'Зачет'),
+        ('zo', 'Зачет с оценкой'),
+        ('kr', 'Курсовая работа'),
+    ]
+    exam_form = models.CharField(verbose_name='Экзаменационная форма', max_length=20, choices=exam_form_choices)
+
+    num_cub_choices = [
+        ('101', '101'),
+        ('102', '102'),
+        ('103', '103'),
+    ]
+    num_cub = models.CharField(verbose_name='Кабинет', max_length=3, blank=True, choices=num_cub_choices)
 
     def __str__(self):
-        return self.name_subject
+        return self.name
 
     def get_absolute_url(self):
         return reverse('view_subjects', kwargs={"pk": self.pk})

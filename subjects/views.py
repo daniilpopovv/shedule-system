@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 
-from .models import *
+from subjects.models import *
 
 
 class SubjectsList(ListView):

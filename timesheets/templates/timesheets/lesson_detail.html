@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Ваше расписание на сегодня
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h5><i class="fa-regular fa-calendar-days"></i> Ваше расписание на сегодня</h5>
+        <div class="d-flex justify-content-between">
+            <div class="list-group d-flex flex-column w-25">
+                {% for item in schedule_today %}
+                    <a aria-current="true" href="{{ item.get_absolute_url }}"
+                       class="list-group-item list-group-item-action">
+                        <b>{{ item.id_subject }}</b> <br>
+                        {{ item.id_lessons_time.time_lesson }}
+                    </a>
+                {% endfor %}
+            </div>
+
+            {% if freeday %}
+                <h6>Занятий сегодня нет</h6>
+            {% endif %}
+
+            <div class="card ms-4 w-75">
+                <div class="card-header">
+                    Featured
+                </div>
+                <div class="card-body">
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

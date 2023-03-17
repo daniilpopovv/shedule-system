@@ -10,12 +10,12 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('home')
+            return redirect('timesheet')
     else:
         form = UserLoginForm()
 
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('timesheet')
 
     return render(request, 'auth/login.html', {"form": form})
 

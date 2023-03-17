@@ -5,6 +5,6 @@ from ScheduleSystem import settings
 from .views import *
 
 urlpatterns = [
-                  path('', ViewTimesheet.as_view(), name='home'),
+                  path('', ViewTimesheet.as_view(), name='timesheet'),
                   path('<int:pk>/', ViewLessons.as_view(), name='view_lessons'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

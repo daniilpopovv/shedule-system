@@ -1,26 +1,27 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light ms-5">
-    <img src="{% static 'images/favicon.ico' %}" alt="ChildFree" class="navbar-brand">
-    <a class="navbar-brand p-lg-3" href="{% url 'home' %}">ScheduleSystem</a>
 
-    {% if request.user.is_authenticated %}
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid d-flex align-items-center">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'timesheet' %}">
+            <img src="{% static 'images/favicon.ico' %}" alt="ScheduleSystem Logo" width="50" height="50"
+                 class="d-inline-block align-text-top ms-3">
+            <span class="ms-3">ScheduleSystem</span>
+        </a>
 
-        <div class="collapse navbar-collapse ms-5" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" aria-current="page"
-                                        href="{% url 'home' %}">Расписание</a>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'news' %}">Новости</a>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'subjects_list' %}">Предметы</a>
-            </ul>
-
-            <span class="navbar-text me-lg-5">
-                Добро пожаловать, {{ user.first_name }} {{ user.last_name }} | <a class="logout"
-                                                                                  href="{% url 'logout' %}">выход</a>
-        </span>
-        </div>
-    {% endif %}
+        {% if request.user.is_authenticated %}
+            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+                <div class="navbar-nav">
+                    <a class="nav-link btn-primary" aria-current="page" href="{% url 'timesheet' %}">Расписание</a>
+                    <a class="nav-link btn-primary" href="{% url 'news' %}">Новости</a>
+                    <a class="nav-link btn-primary" href="{% url 'subjects_list' %}">Предметы</a>
+                </div>
+                <ul class="navbar-nav pe-5">
+                    <li>
+                        <span>Добро пожаловать </span>
+                        <a href="{% url 'logout' %}">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
 </nav>
