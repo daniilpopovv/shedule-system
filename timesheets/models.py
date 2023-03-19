@@ -51,8 +51,7 @@ class Lesson(models.Model):
 
 class Attendance(models.Model):
     date = models.DateField(verbose_name='Дата посещения')
-    is_attendance = models.BooleanField(verbose_name='Присутствие', default=False)
-    id_lesson = models.ForeignKey('timesheets.Lesson', on_delete=models.PROTECT)
+    subject = models.CharField(verbose_name='Название предмета', blank=False, max_length=50)
     id_student = models.ForeignKey('accounts.Student', on_delete=models.PROTECT, default=1)
 
     def get_absolute_url(self):
@@ -76,20 +75,32 @@ class Department(models.Model):
         ordering = ['-id']
 
 
-class Course(models.Model):
-    number = models.IntegerField(verbose_name='Номер курса')
-
-    def __str__(self):
-        return str(self.number)
-
-    class Meta:
-        verbose_name = 'Курс'
-        verbose_name_plural = 'Курсы'
-        ordering = ['-id']
-
-
 class Group(models.Model):
     name = models.CharField(verbose_name='Название группы', max_length=30)
+
+    id_department = models.ForeignKey('timesheets.Department', verbose_name='Кафедра', on_delete=models.PROTECT)
+
+    educational_form_choices = [
+        ('o', 'Очная'),
+        ('zo', 'Заочная'),
+    ]
+    educational_form = models.CharField(
+        verbose_name='Название формы обучения',
+        max_length=30,
+        choices=educational_form_choices
+    )
+
+    course_choices = [
+        (1, '1'),
+        (1, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    ]
+    course = models.IntegerField(
+        verbose_name='Номер курса',
+        choices=course_choices
+    )
 
     def __str__(self):
         return self.name
@@ -109,16 +120,4 @@ class Teacher(models.Model):
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = 'Преподаватели'
-        ordering = ['-id']
-
-
-class EducationalForm(models.Model):
-    name = models.CharField(verbose_name='Название формы обучения', max_length=30)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Форма обучения'
-        verbose_name_plural = 'Формы обучения'
         ordering = ['-id']

@@ -11,9 +11,12 @@
         {% if request.user.is_authenticated %}
             <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
                 <div class="navbar-nav">
-                    <a class="nav-link btn-primary" aria-current="page" href="{% url 'timesheet' %}">Расписание</a>
-                    <a class="nav-link btn-primary" href="{% url 'news' %}">Новости</a>
-                    <a class="nav-link btn-primary" href="{% url 'subjects_list' %}">Предметы</a>
+                    <a class="nav-link btn-primary {% if '/timesheet/' in request.path %} active {% endif %}"
+                       href="{% url 'timesheet' %}">Расписание</a>
+                    <a class="nav-link btn-primary {% if '/news/' in request.path %} active {% endif %}"
+                       href="{% url 'news' %}">Новости</a>
+                    <a class="nav-link btn-primary {% if '/subjects_list/' in request.path %} active {% endif %}"
+                       href="{% url 'subjects_list' %}">Предметы</a>
                 </div>
                 <ul class="navbar-nav pe-5">
                     <li>

@@ -6,5 +6,4 @@ from subjects.models import Subject
 @admin.register(Subject)
 class SubjectsAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'hours', 'image', 'id_course', 'id_group', 'id_group', 'id_teacher',
-        'id_department', 'id_educational_form', 'exam_form', 'num_cub')
+        'name', 'hours', 'image', 'id_group', 'id_teacher', 'exam_form', 'num_cub')

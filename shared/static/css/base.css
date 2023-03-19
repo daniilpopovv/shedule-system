@@ -13,15 +13,3 @@ body, html {
     background-size: cover;
     font-family: 'Montserrat', monospace;
 }
-
-.btn-primary {
-    background: #BEA2EB;
-    box-shadow: 0 0 9px 3px lightgray;
-    border-radius: 20px;
-    margin-left: 10%;
-    padding-left: 10% !important;
-    padding-right: 10% !important;
-    font-weight: 500;
-    font-size: 16px;
-    color: white;
-}

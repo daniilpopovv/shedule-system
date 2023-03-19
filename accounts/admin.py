@@ -5,7 +5,7 @@ from accounts.models import *
 
 @admin.register(Student)
 class StudentsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'id_course', 'id_group', 'id_department', 'id_educational_form')
+    list_display = ('user', 'name', 'id_group')
 
     def student_group(self, obj):
         return obj.id_group.name

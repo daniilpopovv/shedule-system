@@ -7,23 +7,10 @@ class Subject(models.Model):
     hours = models.IntegerField(verbose_name='Часы', default=1)
     image = models.ImageField(upload_to='subjects_images/', default='subjects_images/default.jpg')
 
-    id_course = models.ForeignKey('timesheets.Course', verbose_name='Курс', on_delete=models.PROTECT, default=1)
     id_group = models.ForeignKey('timesheets.Group', verbose_name='Номер группы', on_delete=models.PROTECT, default=1)
     id_teacher = models.ForeignKey(
         'timesheets.Teacher',
         verbose_name='Преподаватель',
-        on_delete=models.PROTECT,
-        default=1
-    )
-    id_department = models.ForeignKey(
-        'timesheets.Department',
-        verbose_name='Название кафедры',
-        on_delete=models.PROTECT,
-        default=1
-    )
-
-    id_educational_form = models.ForeignKey(
-        'timesheets.EducationalForm', verbose_name='Форма обучения',
         on_delete=models.PROTECT,
         default=1
     )
