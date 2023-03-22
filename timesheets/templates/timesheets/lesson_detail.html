@@ -1,0 +1,37 @@
+{% extends 'timesheets/timesheet.html' %}
+
+{% block lesson_detail %}
+    <div class="card-header">
+        <h5>{{ lesson.id_subject.name }}</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <span class="subtitle"><i class="fa-solid fa-chalkboard-user"></i> Преподаватель: </span>
+            {{ lesson.id_subject.id_teacher.name }}
+        </p>
+        <p class="card-text">
+            <span class="subtitle"><i class="fa-solid fa-hashtag"></i> Номер кабинета: </span>
+            {{ lesson.id_subject.num_cub }}
+        </p>
+        <p class="card-text">
+            <span class="subtitle"><i class="fa-regular fa-clock"></i> Время занятия: </span>
+            {{ lesson.get_time_start_display }} — {{ lesson.get_time_end_display }}
+        </p>
+
+
+        {% if attendance_status == 'wait' %}
+            <button class="attendance-btn attendance-btn-wait" type="submit" disabled>Занятие не началось</button>
+        {% elif attendance_status == 'visited' %}
+            <button class="attendance-btn attendance-btn-visited" type="submit" disabled>Вы отметились <i
+                    class="fa-solid fa-check"></i></button>
+        {% elif attendance_status == 'can' %}
+            <form action="{% url 'lesson_detail' pk=lesson.pk %}" method="post">
+                {% csrf_token %}
+                {{ attendance_form.as_p }}
+                <button class="attendance-btn attendance-btn-can" type="submit">Отметиться</button>
+            </form>
+        {% elif attendance_status == 'late' %}
+            <button class="attendance-btn attendance-btn-late" type="submit" disabled>Занятие пропущено</button>
+        {% endif %}
+    </div>
+{% endblock %}

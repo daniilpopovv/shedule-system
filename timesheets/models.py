@@ -41,7 +41,7 @@ class Lesson(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse('view_lessons', kwargs={"pk": self.pk})
+        return reverse('lesson_detail', kwargs={"pk": self.pk})
 
     class Meta:
         verbose_name = 'Расписание'

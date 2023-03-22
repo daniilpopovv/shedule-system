@@ -14,10 +14,10 @@
         <h3><i class="fa-regular fa-calendar-days"></i> Ваше расписание на сегодня</h3>
         <div class="d-flex justify-content-start">
             <div class="list-group d-flex flex-column w-25">
+
                 {% for item in timesheet %}
-                    <a aria-current="true" href="{{ item.get_absolute_url }}"
-                       class="list-group-item list-group-item-action">
-                        <b>{{ item.id_subject }}</b> <br>
+                    <a aria-current="true" href="{{ item.get_absolute_url }}" class="list-group-item mb-3">
+                        <b>{{ item.id_subject }}</b><br>
                         {{ item.get_time_start_display }} - {{ item.get_time_end_display }}
                     </a>
                 {% endfor %}
@@ -26,7 +26,13 @@
             <div class="card lesson-detail ms-4 w-50">
                 {% block lesson_detail %}
                     <div class="card-body">
-                        <h5 class="card-title">Выберите занятие</h5>
+                        <h5 class="card-title">
+                            {% if timesheet|length > 0 %}
+                                Выберите занятие
+                            {% else %}
+                                Сегодня занятий нет
+                            {% endif %}
+                        </h5>
                     </div>
                 {% endblock %}
             </div>

@@ -27,9 +27,13 @@ class ViewTimesheet(LoginRequiredMixin, ListView):
 class ViewLessonDetail(LoginRequiredMixin, FormMixin, DetailView):
     model = Lesson
     context_object_name = 'lesson'
-    template_name = 'timesheets/components/lesson_detail.html'
+    template_name = 'timesheets/lesson_detail.html'
     form_class = AttendanceForm
-    success_url = reverse_lazy('timesheet')
+
+    def get_success_url(self):
+        lesson = self.get_object()
+        pk = lesson.id
+        return reverse_lazy('lesson_detail', kwargs={'pk': pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -52,7 +56,7 @@ class ViewLessonDetail(LoginRequiredMixin, FormMixin, DetailView):
             attendance = Attendance(
                 date=timezone.localdate(),
                 subject=f"{lesson.id_subject.name} {lesson.get_time_start_display()}",
-                id_student=self.request.user.student,
+                id_student=self.request.user.student
             )
             attendance.save()
 
@@ -76,6 +80,6 @@ class ViewLessonDetail(LoginRequiredMixin, FormMixin, DetailView):
         if Attendance.objects.filter(
                 date=timezone.localdate(),
                 subject=f"{lesson.id_subject.name} {lesson.get_time_start_display()}",
-                id_student=self.request.user.student,
+                id_student=self.request.user.student
         ).exists():
             context['attendance_status'] = 'visited'

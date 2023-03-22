@@ -1,0 +1,20 @@
+.card.subject-detail {
+    border: 0;
+    border-radius: 15px;
+    box-shadow: 0 0 10px 3px lightgray;
+    padding: 1%;
+}
+
+.subject-detail .card-header {
+    background-color: white;
+
+}
+
+.subject-detail .card-header h5 {
+    margin: 0;
+    font-weight: 700;
+}
+
+.subject-detail .subtitle {
+    font-weight: 600;
+}

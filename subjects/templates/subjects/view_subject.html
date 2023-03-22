@@ -1,0 +1,25 @@
+{% extends 'subjects/subjects_list.html' %}
+
+{% block subject_detail %}
+    <div class="card-header">
+        <h5>{{ subject.name }}</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <span class="subtitle"><i class="fa-solid fa-chalkboard-user"></i> Преподаватель:</span>
+            {{ subject.id_teacher }}
+        </p>
+        <p class="card-text">
+            <span class="subtitle"><i class="fa-solid fa-hashtag"></i> Номер кабинета:</span>
+            {{ subject.hours }}
+        </p>
+        <p class="card-text">
+            <span class="subtitle"><i class="fa-regular fa-clock"></i> Время занятия:</span>
+            {{ subject.num_cub }}
+        </p>
+        <p class="card-text">
+            <span class="subtitle"><i class="fa-regular fa-clock"></i> Экзаменационная форма:</span>
+            {{ subject.get_exam_form_display }}
+        </p>
+    </div>
+{% endblock %}

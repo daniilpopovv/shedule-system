@@ -9,7 +9,6 @@ body, html {
     height: 100%;
     padding: 0;
     margin: 0;
-    background-image: url("/shared/static/images/background.png");
     background-size: cover;
     font-family: 'Montserrat', monospace;
 }

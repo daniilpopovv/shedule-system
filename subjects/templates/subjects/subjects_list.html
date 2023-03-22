@@ -1,28 +1,41 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     Предметы
 {% endblock %}
 
+{% block static %}
+    <link href="{% static 'css/subjects_list.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <div class="container mt-5">
-        <div class="row justify-content-center align-items-center">
-            {% for item in subjects %}
-                <div class="card p-0"
-                     style="background-image: url({{ item.image_subject.url }}); background-size: 100%; background-color: rgba(0,0,0,.50); background-blend-mode: multiply;">
-                    <a href="{{ item.get_absolute_url }}">
-                        <div class="card-body w-100">
-                            <div class="media">
-                                <div class="media-body">
-                                    <p>{{ item.name_subject }}</p>
-                                    <p class="card-text">{{ item.id_teacher }}</p>
-                                </div>
-                            </div>
+        <h3><i class="fa-regular fa-calendar-days"></i>Предметы</h3>
+        <div class="d-flex justify-content-start">
+            <div class="list-group d-flex flex-column w-25">
 
-                        </div>
+                {% for item in subjects %}
+                    <a aria-current="true" href="{{ item.get_absolute_url }}" class="list-group-item mb-3" style="background-image: url({{ item.image.url }})">
+                        <b>{{ item.name }}</b><br>
+                        {{ item.id_teacher }}
                     </a>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+
+            <div class="card subject-detail ms-4 w-50">
+                {% block subject_detail %}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {% if subjects|length > 0 %}
+                                Выберите занятие
+                            {% else %}
+                                Сегодня занятий нет
+                            {% endif %}
+                        </h5>
+                    </div>
+                {% endblock %}
+            </div>
         </div>
     </div>
 {% endblock %}
