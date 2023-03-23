@@ -1,10 +1,8 @@
-from datetime import datetime
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormMixin
-from django.utils import timezone
 
 from timesheets.models import Lesson, Attendance
 from .forms import AttendanceForm
@@ -55,7 +53,7 @@ class ViewLessonDetail(LoginRequiredMixin, FormMixin, DetailView):
             lesson = self.get_object()
             attendance = Attendance(
                 date=timezone.localdate(),
-                subject=f"{lesson.id_subject.name} {lesson.get_time_start_display()}",
+                subject=f"{lesson.id_subject.name} {lesson.time_start}-{lesson.time_end}",
                 id_student=self.request.user.student
             )
             attendance.save()
@@ -66,9 +64,9 @@ class ViewLessonDetail(LoginRequiredMixin, FormMixin, DetailView):
 
     def update_attendance_status(self, context):
         lesson = self.get_object()
-        lesson_start_time = datetime.strptime(lesson.get_time_start_display(), '%H:%M').time()
-        lesson_end_time = datetime.strptime(lesson.get_time_end_display(), '%H:%M').time()
-        time_now = timezone.now().time()
+        lesson_start_time = lesson.time_start
+        lesson_end_time = lesson.time_end
+        time_now = timezone.localtime().time()
 
         if time_now < lesson_start_time:
             context['attendance_status'] = 'wait'
@@ -79,7 +77,7 @@ class ViewLessonDetail(LoginRequiredMixin, FormMixin, DetailView):
 
         if Attendance.objects.filter(
                 date=timezone.localdate(),
-                subject=f"{lesson.id_subject.name} {lesson.get_time_start_display()}",
+                subject=f"{lesson.id_subject.name} {lesson.time_start}-{lesson.time_end}",
                 id_student=self.request.user.student
         ).exists():
             context['attendance_status'] = 'visited'

@@ -15,9 +15,8 @@
         </p>
         <p class="card-text">
             <span class="subtitle"><i class="fa-regular fa-clock"></i> Время занятия: </span>
-            {{ lesson.get_time_start_display }} — {{ lesson.get_time_end_display }}
+            {{ lesson.time_start }} — {{ lesson.time_end }}
         </p>
-
 
         {% if attendance_status == 'wait' %}
             <button class="attendance-btn attendance-btn-wait" type="submit" disabled>Занятие не началось</button>

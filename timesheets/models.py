@@ -3,7 +3,13 @@ from django.urls import reverse
 
 
 class Lesson(models.Model):
-    id_subject = models.ForeignKey('subjects.Subject', verbose_name='Предмет', on_delete=models.PROTECT, default=1)
+    id_subject = models.ForeignKey(
+        'subjects.Subject',
+        verbose_name='Предмет',
+        on_delete=models.PROTECT,
+        null=False,
+        blank=False
+    )
 
     weekday_choices = [
         ('monday', 'Понедельник'),
@@ -17,50 +23,38 @@ class Lesson(models.Model):
     weekday = models.CharField(
         verbose_name='День недели',
         max_length=10,
-        choices=weekday_choices
+        choices=weekday_choices,
+        null=False,
+        blank=False
     )
 
-    time_start_choices = [
-        (1, '09:00'),
-        (2, '11:00'),
-        (3, '13:00'),
-    ]
-    time_start = models.IntegerField(
-        verbose_name='Время занятия',
-        choices=time_start_choices,
-    )
-
-    time_end_choices = [
-        (1, '10:30'),
-        (2, '12:30'),
-        (3, '14:30'),
-    ]
-    time_end = models.IntegerField(
-        verbose_name='Время занятия',
-        choices=time_end_choices,
-    )
+    time_start = models.TimeField(verbose_name='Время начала занятия', null=False, blank=False)
+    time_end = models.TimeField(verbose_name='Время окончания занятия', null=False, blank=False)
 
     def get_absolute_url(self):
         return reverse('lesson_detail', kwargs={"pk": self.pk})
 
     class Meta:
-        verbose_name = 'Расписание'
-        verbose_name_plural = 'Расписание'
-        ordering = ['-id']
+        verbose_name = 'Занятие'
+        verbose_name_plural = 'Занятия'
+        ordering = ['id_subject']
 
 
 class Attendance(models.Model):
-    date = models.DateField(verbose_name='Дата посещения')
-    subject = models.CharField(verbose_name='Название предмета', blank=False, max_length=50)
-    id_student = models.ForeignKey('accounts.Student', on_delete=models.PROTECT, default=1)
-
-    def get_absolute_url(self):
-        return reverse('view_news', kwargs={"pk": self.pk})
+    date = models.DateField(verbose_name='Дата посещения', null=False, blank=False)
+    subject = models.CharField(verbose_name='Название предмета', null=False, blank=False, max_length=50)
+    id_student = models.ForeignKey(
+        'accounts.Student',
+        verbose_name='Студент',
+        on_delete=models.PROTECT,
+        null=False,
+        blank=False
+    )
 
     class Meta:
-        verbose_name = 'Посещаемость'
-        verbose_name_plural = 'Посещаемость'
-        ordering = ['-id']
+        verbose_name = 'Посещение'
+        verbose_name_plural = 'Посещения'
+        ordering = ['-date']
 
 
 class Department(models.Model):
@@ -70,15 +64,21 @@ class Department(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Название кафедры'
+        verbose_name = 'Кафедра'
         verbose_name_plural = 'Кафедры'
-        ordering = ['-id']
+        ordering = ['name']
 
 
 class Group(models.Model):
-    name = models.CharField(verbose_name='Название группы', max_length=30)
+    name = models.CharField(verbose_name='Название группы', max_length=30, null=False, blank=False)
 
-    id_department = models.ForeignKey('timesheets.Department', verbose_name='Кафедра', on_delete=models.PROTECT)
+    id_department = models.ForeignKey(
+        'timesheets.Department',
+        verbose_name='Кафедра',
+        on_delete=models.PROTECT,
+        null=False,
+        blank=False
+    )
 
     educational_form_choices = [
         ('o', 'Очная'),
@@ -87,7 +87,9 @@ class Group(models.Model):
     educational_form = models.CharField(
         verbose_name='Название формы обучения',
         max_length=30,
-        choices=educational_form_choices
+        choices=educational_form_choices,
+        null=False,
+        blank=False
     )
 
     course_choices = [
@@ -99,7 +101,9 @@ class Group(models.Model):
     ]
     course = models.IntegerField(
         verbose_name='Номер курса',
-        choices=course_choices
+        choices=course_choices,
+        null=False,
+        blank=False
     )
 
     def __str__(self):
@@ -108,7 +112,7 @@ class Group(models.Model):
     class Meta:
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
-        ordering = ['-id']
+        ordering = ['name']
 
 
 class Teacher(models.Model):
@@ -120,4 +124,4 @@ class Teacher(models.Model):
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = 'Преподаватели'
-        ordering = ['-id']
+        ordering = ['name']

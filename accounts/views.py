@@ -17,7 +17,7 @@ def user_login(request):
     if request.user.is_authenticated:
         return redirect('timesheet')
 
-    return render(request, 'auth/login.html', {'auth_form': auth_form})
+    return render(request, 'accounts/login.html', {'auth_form': auth_form})
 
 
 def user_logout(request):

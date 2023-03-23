@@ -16,7 +16,8 @@
             <div class="list-group d-flex flex-column w-25">
 
                 {% for item in subjects %}
-                    <a aria-current="true" href="{{ item.get_absolute_url }}" class="list-group-item mb-3" style="background-image: url({{ item.image.url }})">
+                    <a aria-current="true" href="{{ item.get_absolute_url }}" class="list-group-item mb-3"
+                       style="background-image: url({{ item.image.url }})">
                         <b>{{ item.name }}</b><br>
                         {{ item.id_teacher }}
                     </a>

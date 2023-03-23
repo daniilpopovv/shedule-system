@@ -1,5 +1,5 @@
-from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView
 
 from subjects.models import *
 
@@ -15,7 +15,7 @@ class ViewSubjects(LoginRequiredMixin, ListView):
 
 class ViewSubjectDetail(DetailView):
     model = Subject
-    template_name = 'subjects/view_subject.html'
+    template_name = 'subjects/subject_detail.html'
     context_object_name = 'subject'
 
     def get_context_data(self, **kwargs):

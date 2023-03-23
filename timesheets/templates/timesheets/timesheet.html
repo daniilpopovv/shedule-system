@@ -18,7 +18,7 @@
                 {% for item in timesheet %}
                     <a aria-current="true" href="{{ item.get_absolute_url }}" class="list-group-item mb-3">
                         <b>{{ item.id_subject }}</b><br>
-                        {{ item.get_time_start_display }} - {{ item.get_time_end_display }}
+                        {{ item.time_start }} - {{ item.time_end }}
                     </a>
                 {% endfor %}
             </div>
