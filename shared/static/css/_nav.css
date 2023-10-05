@@ -1,0 +1,36 @@
+.navbar {
+    margin-top: 10px;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 36px;
+}
+
+.btn-primary {
+    background-color: #7D44D6;
+    box-shadow: 0 0 9px 3px #7D44D6;
+    color: white;
+    border-radius: 20px;
+    margin-left: 10%;
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.btn-primary.active {
+    background-color: #BEA2EB;
+    color: white !important;
+    box-shadow: inset 0 0 10px #5833c2, 0 0 2px 3px #7D44D6;
+}
+
+.btn-primary:hover {
+    background-color: #BEA2EB;
+    transition: background-color 0.3s ease-out;
+    color: white;
+}
+
+.btn-primary:not(:hover) {
+    transition: background-color 0.3s ease-in;
+}

@@ -1,0 +1,8 @@
+@import "subject_detail.css";
+
+.list-group-item {
+    border-radius: 15px !important;
+    background-size: cover;
+    color: white;
+    box-shadow: 0 0 10px 3px lightgray;
+}

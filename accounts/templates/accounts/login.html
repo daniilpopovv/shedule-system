@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block static %}
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="card auth w-25">
+        <div class="card-body d-flex flex-column align-center">
+            <h1 class="card-title text-center">Авторизация</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ auth_form.as_p }}
+                <button type="submit" class="btn btn-primary btn-block m-0 mt-2 w-100">Войти</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

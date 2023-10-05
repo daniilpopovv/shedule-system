@@ -1,0 +1,22 @@
+.card {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -25%);
+}
+
+.card .btn {
+    background-color: #7D44D6;
+    box-shadow: 0 0 9px 3px #7D44D6;
+    color: white;
+    border: 0;
+}
+
+.card .btn:hover {
+    background-color: #BEA2EB;
+    transition: background-color 0.3s ease-out;
+}
+
+.card .btn:not(:hover) {
+    transition: background-color 0.3s ease-in;
+}

@@ -1,27 +1,25 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 
-from .models import *
+from subjects.models import *
 
 
-class SubjectsList(ListView):
+class ViewSubjects(LoginRequiredMixin, ListView):
     model = Subject
     template_name = 'subjects/subjects_list.html'
     context_object_name = 'subjects'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
     def get_queryset(self):
-        auth_user = self.request.user
-        if auth_user.is_staff == 0:
-            subjects = Subject.objects.filter(id_group=auth_user.student.id_group)
-            return subjects
-        else:
-            return Subject.objects.all()
+        return Subject.objects.filter(id_group=self.request.user.student.id_group)
 
 
-class ViewSubjects(DetailView):
+class ViewSubjectDetail(DetailView):
     model = Subject
-    template_name = 'subjects/view_subjects.html'
-    context_object_name = 'subjects_item'
+    template_name = 'subjects/subject_detail.html'
+    context_object_name = 'subject'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['subjects'] = Subject.objects.filter(id_group=self.request.user.student.id_group)
+
+        return context

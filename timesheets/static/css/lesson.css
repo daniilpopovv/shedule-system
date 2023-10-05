@@ -1,0 +1,62 @@
+.card.lesson-detail {
+    border: 0;
+    border-radius: 15px;
+    box-shadow: 0 0 10px 3px lightgray;
+    padding: 1%;
+}
+
+.lesson-detail .card-header {
+    background-color: white;
+
+}
+
+.lesson-detail .card-header h5 {
+    margin: 0;
+    font-weight: 700;
+}
+
+.lesson-detail .subtitle {
+    font-weight: 600;
+}
+
+.attendance-btn {
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    padding-left: 3%;
+    padding-right: 3%;
+    border: 0;
+}
+
+.attendance-btn-wait {
+    background-color: #FFFA7C;
+    box-shadow: 0 0 9px 3px #FFFA7C;
+    color: black;
+}
+
+.attendance-btn-visited {
+    background-color: #BCFF9C;
+    box-shadow: 0 0 9px 3px #BCFF9C;
+    color: black;
+}
+
+.attendance-btn-can {
+    background-color: #7D44D6;
+    box-shadow: 0 0 9px 3px #7D44D6;
+    color: white;
+}
+
+.attendance-btn-can:hover {
+    background-color: #BEA2EB;
+    transition: background-color 0.3s ease-out;
+}
+
+.attendance-btn-can:not(:hover) {
+    transition: background-color 0.3s ease-in;
+}
+
+.attendance-btn-late {
+    background-color: #FF6969;
+    box-shadow: 0 0 9px 3px #FF6969;
+    color: white;
+}
